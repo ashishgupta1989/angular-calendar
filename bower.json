@@ -1,0 +1,33 @@
+{
+  "name": "ui-calendar",
+  "version": "0.0.1",
+  "authors": [
+    "yogesh-patel"
+  ],
+  "description": "Calendar directive in Angular",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "keywords": [
+    "angular",
+    "calendar"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.2",
+    "angular-animate": "~1.4.2",
+    "angular-route": "~1.4.2",
+    "jquery": "~2.1.4",
+    "animate.css": "~3.3.0",
+    "materialize": "~0.97.0",
+    "moment": "~2.10.3"
+  }
+}
