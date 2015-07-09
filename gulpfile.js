@@ -34,7 +34,7 @@ gulp.task('clean', function() {
 
 gulp.task('minify-css', function() {
     var opts = {comments:true,spare:true};
-    gulp.src(['./app/**/*.css', '!./bower_components/**'])
+    gulp.src(['./app/**/*.css','./src/**/*.css', '!./bower_components/**'])
         .pipe(minifyCSS(opts))
         .pipe(gulp.dest('./dist/'))
 });
