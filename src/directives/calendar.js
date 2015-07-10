@@ -2,18 +2,28 @@
  * Created by synerzip on 09/07/15.
  */
 var scripts = document.getElementsByTagName("script");
-var currentScriptPath = scripts[scripts.length-1].src;
-angular.module("ui-calendar",[])
-    .directive("calendarUi",[function(){
+var currentScriptPath = scripts[scripts.length - 1].src;
+angular.module("ui-calendar", [])
+    .directive("calendarUi", [function () {
         return {
             restrict: 'E',
             scope: {
-                selected: "="
+                selected: "=",
+                defaultView:"@"
             },
-            templateUrl:currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1) + 'templates/calendar.html',
-            link:function(scope){
+            transclude:true,
+            templateUrl: currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1) + 'templates/calendar.html',
+            link: function (scope) {
+                if(scope.defaultView){
+                    scope.selectedView = scope.defaultView;
+                }else{
+                    scope.selectedView = 'month';
+                }
+
+                scope.day = scope.selected || moment();
                 scope.selected = _removeTime(scope.selected || moment());
                 scope.month = scope.selected.clone();
+
 
                 var start = scope.selected.clone();
                 start.date(1);
@@ -21,27 +31,41 @@ angular.module("ui-calendar",[])
 
                 _buildMonth(scope, start, scope.month);
 
-                scope.select = function(day) {
+                scope.select = function (day) {
                     scope.selected = day.date;
                 };
 
-                scope.next = function() {
+                scope.next = function () {
                     scope.todayAvailable = false;
                     var next = scope.month.clone();
-                    _removeTime(next.month(next.month()+1).date(1));
-                    scope.month.month(scope.month.month()+1);
+                    _removeTime(next.month(next.month() + 1).date(1));
+                    scope.month.month(scope.month.month() + 1);
                     _buildMonth(scope, next, scope.month);
+
+                    //For Day View
+                    if(scope.selectedView == 'day') {
+                        scope.day.add(1, "day");
+                    }else{
+                        //scope.day =  scope.weeks[0].days[0];
+                    }
                 };
 
-                scope.previous = function() {
+                scope.previous = function () {
                     scope.todayAvailable = false;
                     var previous = scope.month.clone();
-                    _removeTime(previous.month(previous.month()-1).date(1));
-                    scope.month.month(scope.month.month()-1);
+                    _removeTime(previous.month(previous.month() - 1).date(1));
+                    scope.month.month(scope.month.month() - 1);
                     _buildMonth(scope, previous, scope.month);
+
+                    if(scope.selectedView == 'day') {
+                        scope.day.subtract(1, "day");
+                    }else{
+                        //scope.day =  scope.weeks[0].days[0];
+                    }
                 };
 
-                scope.gotoToday = function(){
+                scope.gotoToday = function () {
+
                     scope.todayAvailable = true;
                     scope.month = moment().clone();
 
@@ -51,6 +75,12 @@ angular.module("ui-calendar",[])
 
                     _buildMonth(scope, start, scope.month);
                 };
+
+                scope.selectView = function(view){
+                    scope.selectedView = view;
+                };
+
+
             },
 
 
@@ -64,18 +94,18 @@ angular.module("ui-calendar",[])
             scope.weeks = [];
             var done = false, date = start.clone(), monthIndex = date.month(), count = 0;
             while (!done) {
-                scope.weeks.push({ days: _buildWeek(date.clone(), month,scope) });
+                scope.weeks.push({days: _buildWeek(date.clone(), month, scope)});
                 date.add(1, "w");
                 done = count++ > 2 && monthIndex !== date.month();
                 monthIndex = date.month();
             }
         }
 
-        function _buildWeek(date, month,scope) {
+        function _buildWeek(date, month, scope) {
             var days = [];
             for (var i = 0; i < 7; i++) {
-                var lastDayOfWeek=false;
-                if(i == 6){
+                var lastDayOfWeek = false;
+                if (i == 6) {
                     lastDayOfWeek = true;
                 }
                 days.push({
@@ -87,7 +117,7 @@ angular.module("ui-calendar",[])
                     lastDayOfWeek: lastDayOfWeek
                 });
                 date = date.clone();
-                if(date.isSame(new Date(), "day")){
+                if (date.isSame(new Date(), "day")) {
                     scope.todayAvailable = true;
                 }
                 date.add(1, "d");

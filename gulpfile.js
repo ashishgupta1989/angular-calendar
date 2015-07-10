@@ -50,7 +50,11 @@ gulp.task('minify-js', function() {
 
 gulp.task('build-calendar', function() {
     return gulp.src([
-        'src/directives/calendar.js'])
+        'src/directives/calendar.js',
+        'src/directives/monthview.js',
+        'src/directives/dayview.js',
+        'src/directives/weekview.js'
+    ])
         .pipe(concat('angular-calendar.js'))
         .pipe(gulp.dest('dist'))
         .pipe(gulp.dest('docs/lib'))
