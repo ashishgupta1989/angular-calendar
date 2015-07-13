@@ -5,9 +5,13 @@ Calendar Component for AngularJS
 - npm install 
 - bower install
 
-# Test App
-gulp build
+# Run App - Development Mode
+- grunt serve
 
-Open http://localhost:9999
+# Run App - Production Mode
+- grunt serve:prod
+
+# Build App
+- grunt build
 
 
