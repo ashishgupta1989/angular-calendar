@@ -1,8 +1,6 @@
 /**
  * Created by synerzip on 09/07/15.
  */
-var scripts = document.getElementsByTagName("script");
-var currentScriptPath = scripts[scripts.length - 1].src;
 angular.module("ui-calendar", [])
     .directive("calendarUi", [function () {
         return {
@@ -11,8 +9,13 @@ angular.module("ui-calendar", [])
                 selected: "=",
                 defaultView:"@"
             },
+            controller: function($scope) {
+                this.nextNew = function() {
+                    $scope.todayAvailable = 'Ashish';
+                }
+            },
             transclude:true,
-            templateUrl: currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1) + 'templates/calendar.html',
+            templateUrl: '/scripts/directives/templates/calendar.html',
             link: function (scope) {
                 if(scope.defaultView){
                     scope.selectedView = scope.defaultView;

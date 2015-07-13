@@ -10,6 +10,6 @@ angular.module("ui-calendar")
             scope:{
                 weeks:"="
             },
-            templateUrl: currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1) + 'templates/monthview.html',
+            templateUrl: '/scripts/directives/templates/monthview.html',
         };
     }]);

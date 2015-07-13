@@ -8,7 +8,7 @@ angular.module("ui-calendar")
             scope:{
                 day:"="
             },
-            templateUrl: currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1) + 'templates/weekview.html',
+            templateUrl: '/scripts/directives/templates/weekview.html',
             link: function(scope){
                 scope.dayOfweeks = {
 
