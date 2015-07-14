@@ -18,10 +18,12 @@
         <!-- Teal page content  -->
 
         <div class="section">
-            <a ng-class="{'waves-effect waves-light btn disabled':todayAvailable, 'waves-effect waves-light btn' :!todayAvailable}" ng-click="gotoToday()">Today</a>
+            <a ng-class="{'waves-effect waves-light btn disabled':calendarCtrl.todayAvailable, 'waves-effect waves-light btn' :!calendarCtrl.todayAvailable}" ng-click="gotoToday()">Today</a>
             <a class="waves-effect waves-light btn" ng-click="previous()"><i class="medium mdi-hardware-keyboard-arrow-left"></i></a>
             <a class="waves-effect waves-light btn" ng-click="next()"><i class="medium mdi-hardware-keyboard-arrow-right"></i></a>
-            <span ng-if="selectedView == 'month'" style="padding-left:15px;" class="blue-grey-text center">{{month.format("MMMM, YYYY")}}</span>
+            <span ng-if="selectedView == 'month'" style="padding-left:15px;" class="blue-grey-text center">{{calendarCtrl.selected.format("MMMM YYYY")}}</span>
+            <span ng-if="selectedView == 'day'" style="padding-left:15px;" class="blue-grey-text center">{{calendarCtrl.selected.format("dddd, MMM DD, YYYY")}}</span>
+            <span ng-if="selectedView == 'week'" style="padding-left:15px;" class="blue-grey-text center">{{calendarCtrl.startDate.format("MMM DD, YYYY")}} - {{calendarCtrl.endDate.format("MMM DD, YYYY")}}</span>
 
 
             <a class="waves-effect waves-teal btn right" ng-click="selectView('month')"><i ng-if="selectedView == 'month'" class="mdi-navigation-check"></i>Month</a>
@@ -33,11 +35,11 @@
         <div class="divider"></div>
 
         <!-- Month View -->
-        <month-view weeks="weeks" ng-if="selectedView == 'month'"></month-view>
+        <month-view ng-if="selectedView == 'month'"></month-view>
         <!--Day View-->
-        <day-view day="day" ng-if="selectedView == 'day'"></day-view>
+        <day-view  ng-if="selectedView == 'day'"></day-view>
         <!-- Week View -->
-        <week-view day="day" ng-if="selectedView == 'week'"></week-view>
+        <week-view ng-if="selectedView == 'week'"></week-view>
 
 
 

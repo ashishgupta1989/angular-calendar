@@ -11,6 +11,17 @@ angular.module("ui-calendar")
             var newElem = $(html);
             element.replaceWith(newElem);
             return function (scope, element, attrs, controller) {
+                var calendarCtrl = controller;
+
+                //Watch for currently selected date
+                scope.$watch(function(scope){
+                    return calendarCtrl.selected;
+                },function(newValue){
+                    if(newValue !== undefined) {
+                        //scope.selected = _removeTime(newValue);
+                        element.pickadate().pickadate('picker').set('select', newValue.valueOf())
+                    }
+                });
                 element.pickadate({
                     selectMonths: true, // Creates a dropdown to control month
                     selectYears: 15, // Creates a dropdown of 15 years to control year
@@ -18,7 +29,11 @@ angular.module("ui-calendar")
                         goto(new Date());
                     },
                     onSet: function(argument) {
-                        if(argument.select != undefined) {
+                        if(argument.select != undefined && calendarCtrl.selected != argument.select) {
+                            scope.$apply(function(){
+                                controller.selected = moment(argument.select);
+                            });
+
                             this.close();
                         }
                     }

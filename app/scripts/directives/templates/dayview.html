@@ -1,6 +1,6 @@
 <div class="row">
     <div class="hourheader blue-grey-text"></div>
-    <div class="dayHeader blue-grey-text">{{day.format("DD MMMM, YYYY")}}</div>
+    <div class="dayHeader blue-grey-text">{{selectedDate.date.format("dddd MM/DD")}}</div>
 </div>
 
 <div>
@@ -30,7 +30,7 @@
         <div class="hourcell">10pm</div>
         <div class="hourcell">11pm</div>
     </div>
-    <div class="dayColumnBox">
+    <div class="dayColumnBox" ng-class="{'todaycell':selectedDate.isToday}">
         <div class="day-data-cell">
             <div class="day-data-cell-half-hour"></div>
         </div>
